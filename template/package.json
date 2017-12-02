@@ -25,10 +25,10 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "normalize.css": "^7.0.0",
     "vue": "^2.5.2"{{#router}},
-    "vue-router": "^3.0.1"{{/router}},
-    "vuex": "^2.1.1"{{/vuex}},
-    "normalize.css": "^7.0.0"
+    "vue-router": "^3.0.1"{{/router}}{{#vuex}},
+    "vuex": "^2.1.1"{{/vuex}}
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
