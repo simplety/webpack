@@ -1,0 +1,30 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+*::before,
+*::after{
+  box-sizing: border-box;
+}
+html, body {
+  font-size: 16px;
+}
+ul,ol{
+  list-style: none;
+}
+a{
+  text-decoration: none;
+}
+input{
+  outline: none;
+}
+html,body{
+  height: 100%;
+}
+button {
+  background: white;
+  border-radius: .3125rem;
+  color: black;
+  outline: none;
+}
