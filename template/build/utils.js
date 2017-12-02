@@ -17,6 +17,7 @@ exports.cssLoaders = function (options) {
   const cssLoader = {
     loader: 'css-loader',
     options: {
+      minimize: process.env.NODE_ENV === 'production',
       sourceMap: options.sourceMap
     }
   }
@@ -28,17 +29,30 @@ exports.cssLoaders = function (options) {
     }
   }
 
+  var sassResourcesLoader = {
+    loader: 'sass-resources-loader',
+    options: { 
+      resources: path.resolve(__dirname,'../src/assets/global.scss')
+    }
+  }
   // generate loader string to be used with extract text plugin
   function generateLoaders (loader, loaderOptions) {
     const loaders = options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]
-    if (loader) {
+    
+    
+    if (typeof loader === 'string' && loader !== 'scss') {
       loaders.push({
         loader: loader + '-loader',
         options: Object.assign({}, loaderOptions, {
           sourceMap: options.sourceMap
         })
       })
+    }else {
+      loaders.push('sass-loader')
+      loaders.push(sassResourcesLoader)
     }
+
+    
 
     // Extract CSS when that option is specified
     // (which is the case during production build)
@@ -52,13 +66,14 @@ exports.cssLoaders = function (options) {
     }
   }
 
+
   // https://vue-loader.vuejs.org/en/configurations/extract-css.html
   return {
     css: generateLoaders(),
     postcss: generateLoaders(),
     less: generateLoaders('less'),
     sass: generateLoaders('sass', { indentedSyntax: true }),
-    scss: generateLoaders('sass'),
+    scss: generateLoaders('scss'),
     stylus: generateLoaders('stylus'),
     styl: generateLoaders('stylus')
   }
@@ -87,7 +102,7 @@ exports.createNotifierCallback = function () {
     }
     const error = errors[0]
 
-    const filename = error.file && error.file.split('!').pop()
+    const filename = error.file.split('!').pop()
     notifier.notify({
       title: pkg.name,
       message: severity + ': ' + error.name,
